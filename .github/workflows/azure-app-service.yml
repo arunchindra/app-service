@@ -32,7 +32,7 @@ jobs:
 
       - name: Set Startup Command
         run: |
-          az webapp config set --name raise-genai --resource-group your-resource-group --startup-file "gunicorn --bind=0.0.0.0:8000 app:app"
+          az webapp config set --name raise-genai --resource-group CoreInvest_2023-POC --startup-file "gunicorn --bind=0.0.0.0:8000 app:app"
         env:
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
