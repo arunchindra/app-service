@@ -32,6 +32,10 @@ jobs:
 
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Verify Azure CLI installation
+    - name: Check Azure CLI version
+      run: az --version    
  
     # Step 5: Deploy the application to Azure App Service
     - name: 'Deploy to Azure Web App'
