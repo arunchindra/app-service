@@ -38,7 +38,7 @@ jobs:
           creds: '{"clientId": "${{ secrets.AZURE_CLIENT_ID }}", "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}", "tenantId": "${{ secrets.AZURE_TENANT_ID }}"}'
           enable-AzPSSession: false
           environment: azurecloud
-          auth-type: 'SERVICE_PRINCIPAL'  # This specifies the authentication method
+          auth-type: 'azcli'  # This specifies the authentication method
 
     - name: Set Azure Subscription
       run: |
