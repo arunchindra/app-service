@@ -30,7 +30,7 @@ jobs:
     - name: 'Login via Azure'
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
  
     # Step 5: Deploy the application to Azure App Service
     - name: 'Deploy to Azure Web App'
