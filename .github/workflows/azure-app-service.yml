@@ -32,13 +32,12 @@ jobs:
  
     # Step 4: Login to Azure using publish profile
     - name: Log in to Azure
-        uses: azure/login@v1
-        with:
+      uses: azure/login@v1
+      with:
           creds: '{"clientId": "${{ secrets.AZURE_CLIENT_ID }}", "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}", "tenantId": "${{ secrets.AZURE_TENANT_ID }}"}'
           enable-AzPSSession: false
           environment: azurecloud
-          auth-type: 'SERVICE_PRINCIPAL'  # This specifies the authentication method    
- 
+          auth-type: 'SERVICE_PRINCIPAL'  # This specifies the authentication method
     # Step 5: Deploy the application to Azure App Service
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
