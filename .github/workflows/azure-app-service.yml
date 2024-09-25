@@ -29,6 +29,10 @@ jobs:
      # Verify Azure CLI installation
     - name: Check Azure CLI version
       run: az --version   
+
+    - name: Set Azure Subscription
+      run: |
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}  
  
     # Step 4: Login to Azure using publish profile
     - name: Log in to Azure
@@ -38,6 +42,7 @@ jobs:
           enable-AzPSSession: false
           environment: azurecloud
           auth-type: 'SERVICE_PRINCIPAL'  # This specifies the authentication method
+          
     # Step 5: Deploy the application to Azure App Service
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
