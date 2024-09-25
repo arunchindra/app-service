@@ -3,55 +3,31 @@ name: Deploy to Azure App Service
 on:
   push:
     branches:
-      - main  # Triggers deployment on push to the 'main' branch
-  workflow_dispatch: # Allows manual workflow trigger
+      - main
  
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
  
     steps:
-    # Step 1: Checkout code from the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
  
-    # Step 2: Set up Python environment
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
- 
-    # Step 3: Install dependencies
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
-
-     # Verify Azure CLI installation
-    - name: Check Azure CLI version
-      run: az --version   
-  
- 
-    # Step 4: Login to Azure using publish profile
-    - name: Log in to Azure
-      uses: azure/login@v1
-      with:
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
           creds: '{"clientId": "${{ secrets.AZURE_CLIENT_ID }}", "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}", "tenantId": "${{ secrets.AZURE_TENANT_ID }}"}'
           enable-AzPSSession: false
           environment: azurecloud
-          auth-type: 'azcli'  # This specifies the authentication method
-
-    - name: Set Azure Subscription
-      run: |
-          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}    
-          
-    # Step 5: Deploy the application to Azure App Service
-    - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        slot-name: 'production'
+          auth-type: 'SERVICE_PRINCIPAL'  # Keep this as Service Principal
  
-    # Step 6: Azure logout
-    - name: 'Logout from Azure'
-      run: az logout
+      - name: Set Azure Subscription
+        run: |
+          az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+ 
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'raise-genai'  # Replace with your app service name
+          slot-name: 'production'  # Or use another slot if necessary
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}  # If using publish profile instead
